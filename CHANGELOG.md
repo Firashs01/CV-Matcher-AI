@@ -1,5 +1,19 @@
 # Changelog
 
+## [Phase 3.7 Mobile Responsive Sidebar Implementation] - 2026-03-15
+
+### Added
+- **Mobile Responsive Navbar**: Refactored the header into a standalone `Navbar.jsx` component.
+- **Hamburger Menu**: Integrated a Lucide `Menu` toggle for mobile viewports (below `md` breakpoint).
+- **Glassmorphism Sidebar**: Implemented a slide-in sidebar with `backdrop-blur-xl`, `bg-slate-900/80`, and high-definition borders.
+- **Animated Transitions**: Used `AnimatePresence` from Framer Motion for smooth sidebar entry and exit animations.
+- **Interactive Overlay**: Added a darkened backdrop overlay (`bg-black/40`) that closes the menu on click.
+- **Gating Logic Persistence**: Maintained strict access control for guests within the mobile navigation, ensuring redirects to `/signup` from the "History" link.
+
+### Changed
+- **Component Architecture**: Extracted layout logic from `App.jsx` to `src/components/layout/Navbar.jsx` to improve maintainability.
+- **UX Optimization**: Ensured all mobile navigation targets meet or exceed the 48px touch target standard.
+
 ## [Phase 2.7 Auth Validation & Gating Implementation] - 2026-03-14
 
 ### Added

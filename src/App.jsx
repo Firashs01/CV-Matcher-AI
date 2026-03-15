@@ -4,18 +4,18 @@ import JDTextArea from './components/upload/JDTextArea';
 import ScoreDial from './components/dashboard/ScoreDial';
 import KeywordCloud from './components/dashboard/KeywordCloud';
 import ComparisonView from './components/dashboard/ComparisonView';
-import { BarChart2, FileText, CheckCircle2, UserCircle, Database, Check } from 'lucide-react';
+import { BarChart2, FileText, CheckCircle2, UserCircle, Database, Check, Clock, ChevronRight, ArrowLeft, Lock as LockIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useSupabase } from './hooks/useSupabase';
 import { dbService } from './services/dbService';
 
 import { supabase } from './lib/supabase';
 import Auth from './pages/Auth';
+import Navbar from './components/layout/Navbar';
 import { extractTextFromPDF } from './utils/pdfParser';
 import { analyzeCV, reformulateCV } from './services/aiService';
 import { useHistory } from './context/HistoryContext';
 import History from './pages/History';
-import { Clock, ChevronRight, ArrowLeft, Lock as LockIcon } from 'lucide-react';
 import { Routes, Route, Link, Navigate, useLocation } from 'react-router-dom';
 
 function App() {
@@ -123,45 +123,12 @@ function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 relative">
-      <header className="bg-white/70 backdrop-blur-md border-b border-slate-200 sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link to="/" className="flex items-center space-x-2 text-indigo-600">
-              <BarChart2 className="w-8 h-8" />
-              <span className="text-xl font-bold tracking-tight">CV Matcher AI</span>
-            </Link>
-            <nav className="hidden md:flex space-x-8 items-center">
-              <Link to="/" className={`${location.pathname === '/' ? 'text-gray-900 border-indigo-600' : 'text-gray-500 border-transparent hover:text-gray-700'} border-b-2 px-1 py-5 text-sm font-medium transition-colors`}>Dashboard</Link>
-              
-              <Link 
-                to={isAnonymous ? "/signup" : "/history"} 
-                className={`${location.pathname === '/history' ? 'text-gray-900 border-indigo-600' : 'text-gray-500 border-transparent hover:text-gray-700'} border-b-2 px-1 py-5 text-sm font-medium transition-colors flex items-center space-x-1.5`}
-              >
-                <span>History</span>
-                {isAnonymous && <LockIcon className="w-3.5 h-3.5 text-slate-400" />}
-              </Link>
-              
-              {isAuthenticated && !isAnonymous ? (
-                <div className="flex items-center space-x-4 pl-4">
-                  <div className="flex items-center space-x-2 text-sm font-medium text-slate-600 bg-slate-100 px-3 py-1.5 rounded-full">
-                    <UserCircle className="w-5 h-5 text-indigo-500" />
-                    <span>{user?.email || `ID: ${user?.id.slice(0, 8)}`}</span>
-                  </div>
-                  <button onClick={signOut} className="text-sm text-slate-500 hover:text-slate-800 font-medium">Logout</button>
-                </div>
-              ) : (
-                <div className="flex items-center space-x-4 pl-4">
-                  <div className="flex items-center space-x-2 text-sm font-medium text-slate-600 bg-slate-100 px-3 py-1.5 rounded-full">
-                    <UserCircle className="w-5 h-5 text-slate-400" />
-                    <span>Guest User</span>
-                  </div>
-                  <Link to="/login" className="text-sm text-indigo-600 hover:text-indigo-800 font-medium font-bold">Login</Link>
-                </div>
-              )}
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Navbar 
+        user={user} 
+        isAuthenticated={isAuthenticated} 
+        isAnonymous={isAnonymous} 
+        signOut={signOut} 
+      />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
         <Routes>
